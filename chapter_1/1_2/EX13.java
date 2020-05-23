@@ -1,3 +1,5 @@
+
+import edu.princeton.cs.algs4.Date;
 public class EX13 {
 
  private String who; // customer
@@ -12,7 +14,7 @@ public class EX13 {
  
  
  public static void main(String[] args) {
-  Transaction transaction = new EX13("Vincent", new Date(5, 23, 2020), 15);
+  EX13 transaction = new EX13("Vincent", new Date(5, 23, 2020), 15);
 
   System.out.println(transaction);
  }
