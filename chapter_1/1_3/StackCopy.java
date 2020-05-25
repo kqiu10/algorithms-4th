@@ -16,7 +16,6 @@ public class StackCopy{
     Stack<String> newstack =copy(stack);
     StdOut.println("the origin stack is");
     StdOut.println(stack);
-    StdOut.println("the copy stack is");
     StdOut.println(newstack);   
     }   
     }
