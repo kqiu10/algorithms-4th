@@ -50,7 +50,7 @@ public class Percolation {
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        
+        return status[transformtoi(row, col)];
 
     }
 
@@ -58,7 +58,10 @@ public class Percolation {
     public int numberOfOpenSites()
 
     // does the system percolate?
-    public boolean percolates()
+    public boolean percolates() {
+
+
+    }
 
     // test client (optional)
     public static void main(String[] args) {
