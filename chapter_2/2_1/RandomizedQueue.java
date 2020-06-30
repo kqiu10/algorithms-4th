@@ -4,6 +4,7 @@
  *  Description:A randomized queue is similar to a stack or queue, except that the item removed is chosen uniformly at random among items in the data structure.
  **************************************************************************** */
 
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
@@ -15,7 +16,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // construct an empty randomized queue
     public RandomizedQueue() {
-        this.size = 0;
+
         this.items = (Item[]) new Object[1];
     }
 
@@ -51,6 +52,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (size > 0 && size <= items.length / 4) {
             Resize(items.length / 2);
         }
+        size--;
         return pos;
     }
 
@@ -65,6 +67,35 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // return an independent iterator over items in random order
     public Iterator<Item> iterator() {
         return new RandomizedQueueIterator();
+    }
+
+    private class RandomizedQueueIterator implements Iterator<Item> {
+        private int[] randomIndex;
+        private int current;
+
+        public RandomizedQueueIterator() {
+            randomIndex = new int[size];
+            for (int i = 0; i < size; i++) {
+                randomIndex[i] = i;
+            }
+            StdRandom.shuffle(randomIndex);
+            current = 0;
+
+        }
+
+        public boolean hasNext() {
+            return current != randomIndex.length;
+        }
+
+        public Item next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            return items[randomIndex[current++]];
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
     }
 
     private void Resize(int size) {
@@ -88,6 +119,20 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // unit testing (required)
     public static void main(String[] args) {
+        RandomizedQueue<Integer> queue = new RandomizedQueue<>();
+        for (int i = 0; i < 10; i++) {
+            queue.enqueue(i);
+        }
+        Iterator<Integer> it = queue.iterator();
+        while (it.hasNext()) StdOut.print(it.next() + " ");
+        StdOut.println(" size: " + queue.size());
+        for (int i = 0; i < 3; i++) {
+            queue.dequeue();
+        }
+        it = queue.iterator();
+        while (it.hasNext()) StdOut.print(it.next() + " ");
+        StdOut.println(" size: " + queue.size());
     }
 
 }
+
