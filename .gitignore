@@ -2,4 +2,6 @@ out/
 
 *.class
 * chapter_1/screenshot
+* .idea
+* .lift
 
