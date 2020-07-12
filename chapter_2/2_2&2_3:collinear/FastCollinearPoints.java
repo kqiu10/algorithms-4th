@@ -1,5 +1,3 @@
-import collinear.LineSegment;
-import collinear.Point;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
@@ -20,6 +18,32 @@ public class FastCollinearPoints {
             Point[] ps = elements.clone();
             Arrays.sort(ps, ps[i].slopeOrder());
             Point ances = ps[0];
+            double slopeSlow = ances.slopeTo(ps[1]);
+            double slopeFast;
+            //for each element to iterate through the array to check if there are 3 or more adjacent points have equal slopes.
+            for (int idxSlow = 1, idxFast; idxSlow < len - 2;
+                 idxSlow = idxFast, slopeSlow = slopeFast) {
+                idxFast = idxSlow + 1;
+                do {
+                    slopeFast = ances.slopeTo(ps[idxFast++]);
+                } while (slopeSlow == slopeFast && idxFast < len);
+                idxFast--;
+                // Check if any 3 or more adjacent points in the sorted order
+                // have equal slopes with respect to ps[0].
+                // If so, these points, together with ps[0], are collinear.
+                int AdjacentPoint = idxFast - idxSlow;
+                if (AdjacentPoint >= 3) {
+                    Point[] segments = new Point[AdjacentPoint + 1];
+                    segments[0] = ances;
+                    System.arraycopy(ps, idxSlow, segments, 1, AdjacentPoint);
+                    Arrays.sort(segments);
+                    //make sure no duplicate subsegment
+                    if (segments[0] == ances) {
+                        lineSegments.add(new LineSegment(ances, segments[AdjacentPoint]));
+                    }
+
+                }
+            }
         }
 
     }
